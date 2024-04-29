@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_graph"
-    app:startDestination="@id/mainMenuFragment"
-    >
+    app:startDestination="@id/mainMenuFragment">
     <fragment
         android:id="@+id/mainMenuFragment"
         android:name="com.example.workoutapp.main_menu.MainMenuFragment"
@@ -29,7 +28,50 @@
         android:label="fragment_your_workouts"
         tools:layout="@layout/fragment_your_workouts" >
         <action
-            android:id="@+id/action_yourWorkoutsFragment_to_searchExercisesFragment"
-            app:destination="@id/searchExercisesFragment" />
+            android:id="@+id/action_yourWorkoutsFragment_to_addWorkoutPlanFragment"
+            app:destination="@+id/addWorkoutPlanFragment">
+        </action>
+        <action
+            android:id="@+id/action_yourWorkoutsFragment_to_exerciseListFragment"
+            app:destination="@+id/exerciseListFragment">
+        </action>
+    </fragment>
+    <fragment
+        android:id="@+id/addWorkoutPlanFragment"
+        android:name="com.example.workoutapp.workout_plans_list.AddWorkoutPlanFragment"
+        android:label="fragment_add_workout_plan"
+        tools:layout="@layout/fragment_add_workout_plan">
+        <action
+            android:id="@+id/action_addWorkoutPlanFragment_to_yourWorkoutsFragment"
+            app:destination="@id/yourWorkoutsFragment">
+        </action>
+    </fragment>
+    <fragment
+        android:id="@+id/exerciseListFragment"
+        android:name="com.example.workoutapp.workout_plans_list.workout_plan.ExerciseListFragment"
+        android:label="fragment_exercise_list"
+        tools:layout="@layout/fragment_exercise_list">
+        <argument
+            android:name="workoutPlanID"
+            app:argType="integer"
+            />
+        <argument
+            android:name="workoutPlanTitle"
+            app:argType="string"
+            />
+        <action
+            android:id="@+id/action_exerciseListFragment_to_addExerciseFragment"
+            app:destination="@id/addExerciseFragment">
+        </action>
+    </fragment>
+    <fragment
+        android:id="@+id/addExerciseFragment"
+        android:name="com.example.workoutapp.workout_plans_list.workout_plan.AddExerciseFragment"
+        android:label="fragment_add_exercise"
+        tools:layout="@layout/fragment_add_exercise">
+        <argument
+            android:name="workoutPlanId"
+            app:argType="integer">
+        </argument>
     </fragment>
 </navigation>

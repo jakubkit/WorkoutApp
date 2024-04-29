@@ -1,35 +1,73 @@
 package com.example.workoutapp.workout_plans_list
 
-import androidx.fragment.app.viewModels
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.workoutapp.model.WorkoutPlan
 import com.example.workoutapp.databinding.FragmentYourWorkoutsBinding
-import com.example.workoutapp.workout_plans_list.placeholder.PlaceholderContent
+import com.example.workoutapp.model.WorkoutPlansDatabase
+import com.example.workoutapp.model.WorkoutPlansRepository
+import com.google.android.material.snackbar.Snackbar
 
-class YourWorkoutsFragment : Fragment() {
-
-    private val viewModel: YourWorkoutsViewModel by viewModels()
+class YourWorkoutsFragment : Fragment(){
+    private lateinit var viewModel: YourWorkoutsViewModel
     private lateinit var binding: FragmentYourWorkoutsBinding
-    override fun onCreate(savedInstanceState: Bundle?) {
+    private lateinit var workoutPlansAdapter: WorkoutPlansAdapter
+    //private lateinit var sharedViewModel: DeleteDialogViewModel
+    override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
 
-        // TODO: Use the ViewModel
     }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentYourWorkoutsBinding.inflate(inflater, container, false)
-
+        binding = FragmentYourWorkoutsBinding.inflate(layoutInflater, container, false)
+        val workoutPlanDao = WorkoutPlansDatabase.getDatabase(requireContext()).WorkoutPlansDao()
+        val workoutPlansRepository = WorkoutPlansRepository(workoutPlanDao)
+        viewModel = ViewModelProvider(this, YourWorkoutsViewModelFactory(workoutPlansRepository))[YourWorkoutsViewModel::class.java]
+        binding.viewModel = viewModel
+        //binding.lifecycleOwner = this
+        setupRecycleView()
+        viewModel.allWorkoutPlans.observe(this){
+            exerciseList -> workoutPlansAdapter.submitList(exerciseList)
+        }
+        binding.addButton.setOnClickListener{addButtonClick()}
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        binding.workoutsList.adapter = MyWorkoutPlansRecyclerViewAdapter(PlaceholderContent.ITEMS)
+    private fun addButtonClick() {
+        val actionYourWorkoutsToAddWorkoutPlanFragment = YourWorkoutsFragmentDirections.actionYourWorkoutsFragmentToAddWorkoutPlanFragment()
+        findNavController().navigate(actionYourWorkoutsToAddWorkoutPlanFragment)
+    }
+
+//    private fun showDeleteDialog(workoutPlan: WorkoutPlan){
+//        Snackbar.make(requireView(), "Grocery List Deleted", Snackbar.LENGTH_LONG).show()
+//    }
+
+    private fun setupRecycleView() {
+       // sharedViewModel = ViewModelProvider(this, DeleteDialogViewModelFactory(workoutPlansRepository))[DeleteDialogViewModel::class.java]
+        workoutPlansAdapter = WorkoutPlansAdapter(
+            object: WorkoutPlansListener{
+                override fun onItemClick(workoutPlan: WorkoutPlan) {
+                    val actionYourWorkoutsListToExerciseList = YourWorkoutsFragmentDirections.actionYourWorkoutsFragmentToExerciseListFragment(workoutPlan.planId, workoutPlan.title)
+                    findNavController().navigate(actionYourWorkoutsListToExerciseList)
+                    //Snackbar.make(requireView(), "NO SIEMA ${workoutPlan.title}", Snackbar.LENGTH_LONG).show()
+                }
+
+                override fun onItemLongClick(workoutPlan: WorkoutPlan) {
+                    Snackbar.make(requireView(), "Delete ${workoutPlan.title}?", Snackbar.LENGTH_LONG).show()
+                    //showDeleteDialog(workoutPlan)
+                    //sharedViewModel.cos(view!!)
+                    //viewModel.deleteWorkoutPlan(workoutPlan)
+                }
+            })
+        binding.workoutsListRecyclerView.layoutManager = LinearLayoutManager(context)
+        binding.workoutsListRecyclerView.adapter = workoutPlansAdapter
     }
 }
