@@ -1,27 +1,52 @@
 package com.example.workoutapp.search_exercises
 
-import androidx.fragment.app.viewModels
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.workoutapp.R
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.workoutapp.databinding.FragmentSearchExercisesBinding
+import com.example.workoutapp.model.Exercise
+import com.example.workoutapp.workout_plans_list.workout_plan.ExerciseListAdapter
+import com.example.workoutapp.workout_plans_list.workout_plan.ExerciseListListener
+import com.google.android.material.snackbar.Snackbar
 
 class SearchExercisesFragment : Fragment() {
 
-    private val viewModel: SearchExercisesViewModel by viewModels()
-
+    private lateinit var viewModel: SearchExercisesViewModel
+    private lateinit var binding: FragmentSearchExercisesBinding
+    private lateinit var listAdapter: SearchExercisesAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        // TODO: Use the ViewModel
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.fragment_search_exercises, container, false)
+        binding = FragmentSearchExercisesBinding.inflate(inflater, container, false)
+        val exerciseService = RetrofitClient.getClient().create(ExerciseService::class.java)
+
+        viewModel = ViewModelProvider(this, SearchExercisesViewModelFactory(exerciseService)).get(SearchExercisesViewModel::class.java)
+        binding.viewModel = viewModel
+        setupRecycleView()
+//        // Observe LiveData from ViewModel
+        viewModel.exercises.observe(this){ exercises ->
+            listAdapter.submitList(exercises)
+        }
+        // Trigger API call
+        binding.button.setOnClickListener{
+            viewModel.bodyPart.value = binding.bodyPartSpinner.selectedItem.toString()
+            viewModel.searchExercises()
+        }
+        return binding.root
+    }
+    private fun setupRecycleView() {
+        // sharedViewModel = ViewModelProvider(this, DeleteDialogViewModelFactory(workoutPlansRepository))[DeleteDialogViewModel::class.java]
+        listAdapter = SearchExercisesAdapter()
+        binding.exercisesList.layoutManager = LinearLayoutManager(context)
+        binding.exercisesList.adapter = listAdapter
     }
 }
