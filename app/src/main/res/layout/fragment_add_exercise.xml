@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".workout_plans_list.AddWorkoutPlanFragment">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.workoutapp.workout_plans_list.workout_plan.AddExerciseViewModel" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <EditText
+            android:id="@+id/nameInput"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:hint="Exercise name"
+            android:text="@={viewModel.nameInput}"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <EditText
+            android:id="@+id/setsInput"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="10dp"
+            android:hint="Sets"
+            android:text="@={viewModel.setsInput}"
+            app:layout_constraintTop_toBottomOf="@id/nameInput"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <EditText
+            android:id="@+id/repsInput"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="10dp"
+            android:hint="Repetitions"
+            android:text="@={viewModel.repsInput}"
+            app:layout_constraintTop_toBottomOf="@id/setsInput"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <EditText
+            android:id="@+id/weightInput"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="10dp"
+            android:hint="Weight"
+            android:text="@={viewModel.weightInput}"
+            app:layout_constraintTop_toBottomOf="@id/repsInput"
+            app:layout_constraintStart_toStartOf="parent" />
+        <EditText
+            android:id="@+id/notesInput"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="10dp"
+            android:hint="Notes"
+            android:text="@={viewModel.notesInput}"
+            app:layout_constraintTop_toBottomOf="@id/weightInput"
+            app:layout_constraintStart_toStartOf="parent" />
+        <ImageButton
+            android:id="@+id/saveButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="20dp"
+            android:src="@android:drawable/ic_menu_save"
+            app:layout_constraintStart_toEndOf="@+id/nameInput"
+            app:layout_constraintBottom_toBottomOf="@+id/nameInput"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
