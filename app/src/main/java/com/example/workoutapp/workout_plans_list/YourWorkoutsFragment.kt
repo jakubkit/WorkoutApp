@@ -47,7 +47,7 @@ class YourWorkoutsFragment : Fragment(){
     }
 
 //    private fun showDeleteDialog(workoutPlan: WorkoutPlan){
-//        Snackbar.make(requireView(), "Grocery List Deleted", Snackbar.LENGTH_LONG).show()
+//        Snackbar.make(requireView(), "", Snackbar.LENGTH_LONG).show()
 //    }
 
     private fun setupRecycleView() {
@@ -57,7 +57,6 @@ class YourWorkoutsFragment : Fragment(){
                 override fun onItemClick(workoutPlan: WorkoutPlan) {
                     val actionYourWorkoutsListToExerciseList = YourWorkoutsFragmentDirections.actionYourWorkoutsFragmentToExerciseListFragment(workoutPlan.planId, workoutPlan.title)
                     findNavController().navigate(actionYourWorkoutsListToExerciseList)
-                    //Snackbar.make(requireView(), "NO SIEMA ${workoutPlan.title}", Snackbar.LENGTH_LONG).show()
                 }
 
                 override fun onItemLongClick(workoutPlan: WorkoutPlan) {

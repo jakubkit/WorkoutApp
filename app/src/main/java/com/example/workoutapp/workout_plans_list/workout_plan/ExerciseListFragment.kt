@@ -61,12 +61,10 @@ class ExerciseListFragment : Fragment() {
         exerciseListAdapter = ExerciseListAdapter(
             object: ExerciseListListener {
                 override fun onItemClick(exercise: Exercise) {
-                    //displayWorkoutPlan(workoutPlan)
-                    Snackbar.make(requireView(), "NO SIEMA ${exercise.name}", Snackbar.LENGTH_LONG).show()
                 }
 
                 override fun onItemLongClick(exercise: Exercise) {
-                    Snackbar.make(requireView(), "Delete ${exercise.name}?", Snackbar.LENGTH_LONG).show()
+                    //Snackbar.make(requireView(), "Delete ${exercise.name}?", Snackbar.LENGTH_LONG).show()
                     //showDeleteDialog(workoutPlan)
                     //sharedViewModel.cos(view!!)
                     //viewModel.deleteWorkoutPlan(workoutPlan)

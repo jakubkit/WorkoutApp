@@ -17,11 +17,7 @@ class ExerciseListViewModel(
     private val exerciseRepository: ExerciseRepository
 ): ViewModel() {
     val exerciseItems: LiveData<MutableList<Exercise>> = exerciseRepository.exerciseListItems
-//    private fun insertExercises(exercise: Exercise){
-//        viewModelScope.launch(Dispatchers.IO) {
-//            exerciseRepository.insertExercise(exercise)
-//        }
-//    }
+
     fun updateExercise(exercise: Exercise){
         viewModelScope.launch(Dispatchers.IO) {
             exerciseRepository.updateExercise(exercise)
@@ -31,10 +27,6 @@ class ExerciseListViewModel(
         TODO("DELETE CWICZEN DO BAZY")
     }
 
-//    fun saveExercises(id: Int) {
-//        val ex1 = Exercise("cwiczenie1", id, 4, 10, 10.5, "notatki" )
-//        insertExercises(ex1)
-//    }
 
 }
 class ExerciseListViewModelFactory(private val exerciseRepository: ExerciseRepository): ViewModelProvider.Factory{

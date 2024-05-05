@@ -37,7 +37,6 @@ class ExerciseRepository(private val workoutPlansDao: WorkoutPlansDao, planId: I
     }
 
     suspend fun updateExercise(exercise: Exercise){
-        Log.w(ContentValues.TAG, "KURWA MAC ${exercise.sets} i chuj ${exercise.repetitions}")
         workoutPlansDao.updateExercise(exercise.exerciseId, exercise.repetitions, exercise.sets, exercise.weight, exercise.notes)
 //        workoutPlansDao.updateExercise(exercise)
     }
