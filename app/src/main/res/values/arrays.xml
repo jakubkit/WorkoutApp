@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="product_unit_spinner_entries">
+            <item>Chest</item>
+            <item>Back</item>
+            <item>Shoulders</item>
+            <item>Legs</item>
+            <item>Arms</item>
+            <item>Core</item>
+    </string-array>
+</resources>
