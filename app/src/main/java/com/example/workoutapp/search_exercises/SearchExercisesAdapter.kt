@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.workoutapp.databinding.SearchExerciseListItemBinding
 
 class SearchExercisesAdapter:
-    ListAdapter<ExampleExercise, SearchExercisesAdapter.ViewHolder>(SearchExercisesAdapter.SearchExercisesDiffCallback()){
+    ListAdapter<ExampleExercise, SearchExercisesAdapter.ViewHolder>(SearchExercisesDiffCallback()){
     inner class ViewHolder(private val binding: SearchExerciseListItemBinding):
         RecyclerView.ViewHolder(binding.root){
             fun bind(exercise: ExampleExercise){
